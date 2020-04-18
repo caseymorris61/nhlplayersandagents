@@ -55,5 +55,8 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
+def getApp():
+    return app
+
 if __name__ == "__main__":
     app.run()
