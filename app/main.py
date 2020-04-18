@@ -4,7 +4,7 @@ import sqlite3
 #initializations
 app = Flask(__name__)
 
-DATABASE='static/agentdatabase'
+DATABASE='/app/app/static/agentdatabase'
 
 @app.route("/")
 @app.route("/index")
