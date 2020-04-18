@@ -1,0 +1,50 @@
+{%extends 'base.html'%}
+
+{%block title%}NHL Players{%endblock%}
+
+{%block content%}
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			<h3 style="text-align: center;">NHL Players</h3>
+			<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by player name">
+			<table class="table table-striped table-hover table-bordered" id="myTable">
+				<th>Player Name</th>
+				<th>AAV Salary</th>
+				<th>Agent Info</th>
+				{%for d in players%}
+				<tr>
+					<td>{{d.0}}</td>
+					<td>{{d.2}}</td>
+					<td><a href="/agent/{{d.1}}">Contact Agent</a></td>
+				</tr>
+				{%endfor%}
+			</table>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+</div>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td1 = tr[i].getElementsByTagName("td")[0];
+    td2 = tr[i].getElementsByTagName("td")[1];
+    if (td1) {
+      if ((td1.innerHTML.toUpperCase().indexOf(filter) > -1) || (td2.innerHTML.toUpperCase().indexOf(filter) > -1) ) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+{%endblock%}
