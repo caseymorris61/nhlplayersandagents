@@ -52,7 +52,30 @@ def get_agent(variable):
     phone = agent[4]
     mobile = agent[5]
     url_ext = agent[6]
-    return render_template('agent.html', name=name,address=address,agency=agency,email=email,phone=phone,mobile=mobile,url_ext=url_ext)
+
+
+    playersInfo = []
+    playerquery = "select name, salary from players where agentID = ?"
+    c = get_db().cursor()
+    c.execute(playerquery, (str(variable),))
+    players = c.fetchall()
+    for row in players:
+        name = row[0]
+        try:
+            salaryVal = int(row[1].strip('"').strip('$').replace(',',"").strip())
+        except ValueError :
+            salaryVal = 0
+
+        salary = '${:,.2f}'.format(salaryVal)
+
+        d = [name,salary,salaryVal]
+        playersInfo.append(d)
+
+
+    playersInfo.sort(key=lambda x: x[2],reverse=True)
+    numPlayers = len(playersInfo)
+
+    return render_template('agent.html', name=name,address=address,agency=agency,email=email,phone=phone,mobile=mobile,url_ext=url_ext,players=playersInfo,numPlayers=numPlayers)
 
 @app.route("/agents")
 def agents():
