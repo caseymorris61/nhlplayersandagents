@@ -60,7 +60,7 @@ def get_agent(variable):
     c.execute(playerquery, (str(variable),))
     players = c.fetchall()
     for row in players:
-        name = row[0]
+        playername = row[0]
         try:
             salaryVal = int(row[1].strip('"').strip('$').replace(',',"").strip())
         except ValueError :
@@ -68,7 +68,7 @@ def get_agent(variable):
 
         salary = '${:,.2f}'.format(salaryVal)
 
-        d = [name,salary,salaryVal]
+        d = [playername,salary,salaryVal]
         playersInfo.append(d)
 
 
